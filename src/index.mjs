@@ -1,6 +1,9 @@
 import express, { response } from "express";
+import cors from "cors";
 
 const app = express();
+
+app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,7 +16,7 @@ const mockUsers = [
 ];
 
 app.get("/", (req, res) => {
-  res.status(201).send({ mgs: "Hello, world" });
+  res.status(201).send({ msg: "Hello!" });
 });
 
 app.get("/api/users", (req, res) => {
@@ -21,22 +24,16 @@ app.get("/api/users", (req, res) => {
 });
 
 app.get("/api/users/:id", (req, res) => {
-  console.log(req.params.id);
   const parsedId = parseInt(req.params.id);
-  if (isNaN(parsedId))
-    return res.status(400).send({ msg: "Bad request, Invalid ID" });
+  if (isNaN(parsedId)) return res.sendStatus(400);
 
   const findUser = mockUsers.find((user) => user.id === parsedId);
-  if (!findUser) return res.status(404).send({ msg: "User not Found" });
+  if (!findUser) return res.sendStatus(404);
   return res.send(findUser);
 });
 
-app.get("/api/products", (req, res) => {
-  res.send([{ id: 123, name: "Chicken breast", price: 12.99 }]);
-});
-
 app.listen(PORT, () => {
-  console.log(`Running on Port ${PORT}`);
+  console.log(`Running on port ${PORT}`);
 });
 
 // localhost:3000

@@ -1,22 +1,36 @@
-import express from "express";
+import express, { response } from "express";
 
 const app = express()
 
 const PORT = process.env.PORT || 3000;
 
 const mockUsers = [
-    {user: "Pedro",  id: 1},
-    {user: "Gustavo", id: 2},
-    {user: "Alan", id: 3},
-    ]
+    { username: "Pedro", displayName: "pedroxD",  id: 1},
+    { username: "anson", displayName: "Anson", id: 2 },
+    { username: "Ana", displayName: "skylover", id: 3 },
+    { username: "Carlos", displayName: "techie", id: 4 },
+    { username: "Julia", displayName: "artsy", id: 5 },
+    { username: "Marcos", displayName: "gamerXP", id: 6 },
+    { username: "Beatriz", displayName: "bookworm", id: 7 },
+    { username: "Ricardo", displayName: "codeMaster", id: 8 },
+] 
 
 app.get("/", (req, res) => {
-    res.status(201).send({msg:"Hello"})
+    res.status(201).send({ msg:"Hello" })
 })
 
 app.get("/api/users", (req, res) => {
-    res.send(mockUsers)
-})
+    console.log(req.query);
+    const { query: {filter, value} } = req;
+    //  when filter and value are undefined
+    if (!filter && !value) return res.send(mockUsers);
+
+    if (filter && value) 
+        return res.send(
+            mockUsers.filter((user) => user[filter].includes(value))
+        )
+    return response.send(mockUsers)
+});
 
 app.get("/api/users/:id", (req, res) => {
     // console.log(req.params.id); 

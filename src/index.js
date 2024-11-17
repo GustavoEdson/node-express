@@ -8,7 +8,6 @@ app.get("/", (req, res) => {
     res.status(201).send({msg:"Hello"})
 })
 
-app.get("/api/products", (req, res))
 
 app.get("/api/users", (req, res) => {
     res.statusCode(201).send([

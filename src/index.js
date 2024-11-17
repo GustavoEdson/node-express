@@ -17,11 +17,9 @@ app.get("/api/users", (req, res) => {
     ])
 })
 
-app.get("/api/products", (req, res) => {
-    res.send([
-        {id: 125, name:"chicken breast", price: 12.99},
-        {id: 125, name:"chicken breast", price: 12.99},
-        {id: 125, name:"chicken breast", price: 12.99}])
+
+app.get("/api/games", (req, res) => {
+    res.send("hi there your game library is empty")
 })
 
 app.listen(PORT, () => {
